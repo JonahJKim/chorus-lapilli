@@ -12,12 +12,14 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
+            copy: true,
+            paste: false,
+            tempStorage: null,
         }
     }
     
 
     handleClick(i) {
-        console.log(this.state.stepNumber);
         if (this.state.stepNumber <= 5) {
             const history = this.state.history.slice(0, this.state.stepNumber + 1);
             const current = history[history.length - 1];
@@ -33,6 +35,34 @@ class Game extends React.Component {
                 stepNumber: history.length,
                 xIsNext: !this.state.xIsNext,
             });
+        }
+
+        // if 6 or more moves
+        else {
+            const history = this.state.history.slice(0, this.state.stepNumber + 1);
+            const current = history[history.length - 1];
+            const squares = current.squares.slice();
+            if (calculateWinner(squares) || (squares[i] && (this.state.paste === true)) || ((squares[i] === null) && (this.state.copy === true))) {
+                return;
+            }
+            if (this.state.copy === true) {
+                this.state.tempStorage = squares[i];
+                this.setState({
+                    copy: false,
+                    paste: true,
+                })
+            }
+            else {
+                squares[i] = this.state.tempStorage;
+                this.setState({
+                    history: history.concat([{
+                        squares: squares,
+                    }]),
+                    stepNumber: this.state.stepNumber + 1,
+                    copy: true,
+                    paste: false,
+                })
+            }
         }
 
     }
@@ -63,7 +93,7 @@ class Game extends React.Component {
         if (winner) {
             status = 'Winner: ' + winner;
         }
-        else {
+        else /*if (this.state.stepNumber <= 5)*/ {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
       return (
