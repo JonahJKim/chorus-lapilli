@@ -47,7 +47,8 @@ class Game extends React.Component {
                 return;
             }
             if (this.state.copy === true) {
-                if ((squares[4] !== null && i !== 4) || ((squares[i] === 'X') !== this.state.xIsNext) || ((squares[i] === 'O') === this.state.xIsNext)) {
+                let sameAsMiddle = ((squares[4] === 'X') === this.state.xIsNext) || ((squares[4] === 'O') === !this.state.xIsNext)
+                if ((squares[4] !== null && i !== 4 && sameAsMiddle) || ((squares[i] === 'X') !== this.state.xIsNext) || ((squares[i] === 'O') === this.state.xIsNext)) {
                     return;
                 }
                 this.state.tempStorage = squares[i];
