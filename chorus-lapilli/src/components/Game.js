@@ -47,7 +47,7 @@ class Game extends React.Component {
                 return;
             }
             if (this.state.copy === true) {
-                if (squares[4] !== null && i !== 4) {
+                if ((squares[4] !== null && i !== 4) || ((squares[i] === 'X') !== this.state.xIsNext) || ((squares[i] === 'O') === this.state.xIsNext)) {
                     return;
                 }
                 this.state.tempStorage = squares[i];
@@ -67,6 +67,7 @@ class Game extends React.Component {
                     stepNumber: this.state.stepNumber + 1,
                     copy: true,
                     paste: false,
+                    xIsNext: !this.state.xIsNext,
                 })
             }
         }
