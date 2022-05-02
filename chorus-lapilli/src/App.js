@@ -4,4 +4,4 @@ function App() {
     return <Game />
 }
 
-export default App;d
+export default App;
