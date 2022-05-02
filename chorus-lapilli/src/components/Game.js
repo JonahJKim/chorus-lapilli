@@ -15,6 +15,7 @@ class Game extends React.Component {
             copy: true,
             paste: false,
             tempStorage: null,
+            last_i: null,
         }
     }
     
@@ -46,14 +47,19 @@ class Game extends React.Component {
                 return;
             }
             if (this.state.copy === true) {
+                if (squares[4] !== null && i !== 4) {
+                    return;
+                }
                 this.state.tempStorage = squares[i];
                 this.setState({
+                    last_i: i,
                     copy: false,
                     paste: true,
                 })
             }
             else {
                 squares[i] = this.state.tempStorage;
+                squares[this.state.last_i] = null;
                 this.setState({
                     history: history.concat([{
                         squares: squares,
