@@ -51,11 +51,11 @@ class Game extends React.Component {
                 if ((squares[4] !== null && i !== 4 && sameAsMiddle) || ((squares[i] === 'X') !== this.state.xIsNext) || ((squares[i] === 'O') === this.state.xIsNext)) {
                     return;
                 }
-                this.state.tempStorage = squares[i];
                 this.setState({
                     last_i: i,
                     copy: false,
                     paste: true,
+                    tempStorage: squares[i],
                 })
             }
             else {
